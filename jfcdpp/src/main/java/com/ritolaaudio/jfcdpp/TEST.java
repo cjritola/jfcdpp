@@ -36,8 +36,8 @@ public class TEST
      */
     public static void main(String[] args) throws IOException
     {
-        listDevices();
-        readDevice();
+     listDevices();
+     readDevice();
     }
     
     private static void readDevice()
