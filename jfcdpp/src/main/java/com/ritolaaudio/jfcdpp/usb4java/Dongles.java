@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  ******************************************************************************/
-package com.ritolaaudio.jfcdpp.usb4javaD;
+package com.ritolaaudio.jfcdpp.usb4java;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -49,6 +49,14 @@ public class Dongles
 			
 			for(HIDDevice dev:Dongles.getDongles(rootHub, new ArrayList<HIDDevice>()))
 				{result.add(new FCDPP(dev));}
+			}
+		catch(UnsatisfiedLinkError e)
+			{
+			throw new UnsatisfiedLinkError
+				("Unsatisfied link error: "+e.getMessage()+(System.getProperty("os.name").toUpperCase().contains("XP")?
+						"\tConsider installing installing Microsoft Visual C++ 2008 SP1 \n" +
+						"\tRedistributable Package and try again. \n" +
+						"\t(http://www.microsoft.com/en-us/download/details.aspx?id=5582)":""));
 			}
 		catch(UsbException e){throw new IOException("UsbException",e);}
 		return result;

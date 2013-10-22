@@ -1,4 +1,4 @@
-package com.ritolaaudio.jfcdpp.usb4javaD;
+package com.ritolaaudio.jfcdpp.usb4java;
 
 import java.io.IOException;
 
