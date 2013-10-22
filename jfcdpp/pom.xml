@@ -14,7 +14,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <repositories>
+  <repository>
+    <id>ailis</id>
+    <name>Ailis Maven Releases</name>
+    <url>http://nexus.ailis.de/content/groups/public/</url>
+  </repository>
+</repositories>
+
   <dependencies>
+  <dependency>
+    <groupId>de.ailis.usb4java</groupId>
+    <artifactId>usb4java</artifactId>
+    <version>1.0.0</version>
+  </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
