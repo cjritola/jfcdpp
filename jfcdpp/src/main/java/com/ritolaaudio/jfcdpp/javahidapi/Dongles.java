@@ -38,7 +38,9 @@ public class Dongles
 		ArrayList<FCDPP> result = new ArrayList<FCDPP>();
 		//try
 		//	{
+			System.out.println("Performing dongle scan...");
 			if(manager==null)manager = HIDManager.getInstance();
+			if(manager==null){System.err.println("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");throw new NullPointerException("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");}
 			for(HIDDeviceInfo dev:manager.listDevices())
 				{
 				if(dev.getProduct_string()!=null)
@@ -51,7 +53,7 @@ public class Dongles
 							result.add(dongle);
 							}
 						catch(HIDDeviceNotFoundException e)
-							{throw new AssertionError("Device was listed yet request fails to provide it.");}
+							{throw new AssertionError("Device was listed yet request fails to provide it. Impossible situation encountered. Universe collapsing...");}
 						}
 					}//end if(!null)
 				}//end for(devices)
