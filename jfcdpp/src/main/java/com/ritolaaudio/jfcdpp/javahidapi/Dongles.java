@@ -40,7 +40,9 @@ public class Dongles
 		//	{
 			System.out.println("Performing dongle scan...");
 			if(manager==null)manager = HIDManager.getInstance();
-			if(manager==null){System.err.println("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");throw new NullPointerException("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");}
+			if(manager==null){System.err.println("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue. Freaking out...");throw new NullPointerException("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");}
+			HIDDeviceInfo [] devs = manager.listDevices();
+			if(devs==null){return result;}//Complete lack of devices results in null.
 			for(HIDDeviceInfo dev:manager.listDevices())
 				{
 				if(dev.getProduct_string()!=null)
