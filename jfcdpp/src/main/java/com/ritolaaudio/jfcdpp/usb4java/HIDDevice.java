@@ -19,12 +19,6 @@ public class HIDDevice
 	private final UsbInterface iface;
 	private final UsbPipe pipe;
 	
-	public static void main(String [] args)
-		{
-		try{Dongles.getDongles();}
-		catch(IOException e){e.printStackTrace();}
-		}
-	
 	public HIDDevice(UsbDevice d, UsbInterface iface, UsbPipe pipe)
 		{
 		device=d;
@@ -47,13 +41,13 @@ public class HIDDevice
 		StringBuilder sb = new StringBuilder();
 		for(byte b:irp.getData())
 			{sb.append(b+" ");}
-		System.out.println("sent "+sb);
+		//System.out.println("sent "+sb);
 		try{pipe.syncSubmit(irp);irp.waitUntilComplete();}
 		catch(UsbException e){e.printStackTrace();}
 		sb = new StringBuilder();
 		for(byte b:irp.getData())
 			{sb.append(b+" ");}
-		System.out.println("response "+sb);
+		//System.out.println("response "+sb);
 		release();
 		}
 
@@ -70,7 +64,11 @@ public class HIDDevice
 		}
 	private void release()
 		{
-		try{pipe.abortAllSubmissions();pipe.close();if(iface.isClaimed())iface.release();}
+		try
+			{
+			if(pipe.isOpen())
+				{pipe.abortAllSubmissions();pipe.close();}if(iface.isClaimed())iface.release();
+			}
 		catch(Exception e){e.printStackTrace();}
 		}
 	
@@ -93,7 +91,7 @@ public class HIDDevice
 		StringBuilder sb = new StringBuilder();
 		for(byte b:data)
 			{sb.append(b+" ");}
-		System.out.println("read "+sb);
+		//System.out.println("read "+sb);
 		System.arraycopy(data, 0, result, 0, result.length<data.length?result.length:data.length);
 		release();
 		}

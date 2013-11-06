@@ -20,12 +20,14 @@ package com.ritolaaudio.jfcdpp.javahidapi;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.codeminders.hidapi.HIDDevice;
 import com.codeminders.hidapi.HIDDeviceInfo;
 import com.codeminders.hidapi.HIDDeviceNotFoundException;
 import com.codeminders.hidapi.HIDManager;
+import com.ritolaaudio.jfcdpp.FCDPP;
 
 public class Dongles
 	{
@@ -33,16 +35,16 @@ public class Dongles
 	//private static Logger log = Logger.getGlobal();
 	private static HIDManager manager;
 	
-	public static List<FCDPP> getDongles() throws IOException
+	public static void getDongles(Collection<FCDPP> result) throws IOException
 		{
-		ArrayList<FCDPP> result = new ArrayList<FCDPP>();
+		//ArrayList<FCDPPImpl> result = new ArrayList<FCDPPImpl>();
 		//try
 		//	{
 			System.out.println("Performing dongle scan...");
 			if(manager==null)manager = HIDManager.getInstance();
 			if(manager==null){System.err.println("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue. Freaking out...");throw new NullPointerException("HIDManager.getInstance() passed a null pointer. Unexpected behavior; cannot continue.");}
 			HIDDeviceInfo [] devs = manager.listDevices();
-			if(devs==null){return result;}//Complete lack of devices results in null.
+			if(devs==null){return;}//Complete lack of devices results in null.
 			for(HIDDeviceInfo dev:manager.listDevices())
 				{
 				if(dev.getProduct_string()!=null)
@@ -51,7 +53,7 @@ public class Dongles
 						{try{
 							//Found it.
 							HIDDevice device = manager.openByPath(dev.getPath());
-							FCDPP dongle = new FCDPP(device);
+							FCDPPImpl dongle = new FCDPPImpl(device);
 							result.add(dongle);
 							}
 						catch(HIDDeviceNotFoundException e)
@@ -61,7 +63,6 @@ public class Dongles
 				}//end for(devices)
 		//	}//end try{}
 		//catch(Exception e){e.printStackTrace();}
-		return result;
 		}//end getDongles
 	
 	public static void release()

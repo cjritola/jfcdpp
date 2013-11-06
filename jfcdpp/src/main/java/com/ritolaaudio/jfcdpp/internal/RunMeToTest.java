@@ -19,12 +19,14 @@
 package com.ritolaaudio.jfcdpp.internal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.ritolaaudio.jfcdpp.Dongles;
+import com.ritolaaudio.jfcdpp.FCDPP;
 import com.ritolaaudio.jfcdpp.IFFilter;
 import com.ritolaaudio.jfcdpp.RFFilter;
-import com.ritolaaudio.jfcdpp.javahidapi.Dongles;
-import com.ritolaaudio.jfcdpp.javahidapi.FCDPP;
+import com.ritolaaudio.jfcdpp.javahidapi.FCDPPImpl;
 
 public class RunMeToTest
 	{
@@ -40,8 +42,8 @@ public class RunMeToTest
 
 	public RunMeToTest()
 		{
-		List<FCDPP> dongles;
-		try {dongles = Dongles.getDongles();}
+		List<FCDPP> dongles = new ArrayList<FCDPP>();
+		try {Dongles.getDongles(dongles,com.ritolaaudio.jfcdpp.javahidapi.Dongles.class);}
 		catch(IOException e){e.printStackTrace();return;}
 		
 		if(!dongles.isEmpty())
@@ -60,7 +62,7 @@ public class RunMeToTest
 			System.out.println("Closed.");
 			}
 		else{System.out.println("Failed to find any FunCubes.");}
-		Dongles.release();
+		//Dongles.release();
 		System.out.println("Exiting...");
 		}//end RunMeToTest
 	}//end RunMeToTest

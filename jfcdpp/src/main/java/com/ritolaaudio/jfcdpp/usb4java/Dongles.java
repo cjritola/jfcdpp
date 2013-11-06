@@ -21,6 +21,7 @@ package com.ritolaaudio.jfcdpp.usb4java;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.usb.UsbConst;
@@ -31,24 +32,24 @@ import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbInterface;
-import javax.usb.UsbInterfacePolicy;
 import javax.usb.UsbPipe;
 import javax.usb.UsbServices;
+
+import com.ritolaaudio.jfcdpp.FCDPP;
 
 
 public class Dongles
 	{
 	static {com.codeminders.hidapi.ClassPathLibraryLoader.loadNativeHIDLibrary();}
 	
-	public static List<FCDPP> getDongles() throws IOException
+	public static void getDongles(Collection<FCDPP> result) throws IOException
 		{
-		ArrayList<FCDPP> result = new ArrayList<FCDPP>();
 		try {
 			UsbServices srv = UsbHostManager.getUsbServices();
 			UsbHub rootHub = srv.getRootUsbHub();
 			
 			for(HIDDevice dev:Dongles.getDongles(rootHub, new ArrayList<HIDDevice>()))
-				{result.add(new FCDPP(dev));}
+				{result.add(new FCDPPImpl(dev));}
 			}
 		catch(UnsatisfiedLinkError e)
 			{
@@ -59,7 +60,6 @@ public class Dongles
 						"\t(http://www.microsoft.com/en-us/download/details.aspx?id=5582)":""));
 			}
 		catch(UsbException e){throw new IOException("UsbException",e);}
-		return result;
 		}
 	private static List<HIDDevice> getDongles(UsbDevice device, List<HIDDevice> result) throws UsbException
 		{

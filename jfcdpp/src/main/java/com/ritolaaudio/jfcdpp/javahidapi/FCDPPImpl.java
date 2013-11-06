@@ -16,24 +16,27 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  ******************************************************************************/
-package com.ritolaaudio.jfcdpp.usb4java;
+package com.ritolaaudio.jfcdpp.javahidapi;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.logging.Logger;
 
+import com.codeminders.hidapi.HIDDevice;
+import com.ritolaaudio.jfcdpp.FCDPP;
 import com.ritolaaudio.jfcdpp.IFFilter;
 import com.ritolaaudio.jfcdpp.RFFilter;
-import com.ritolaaudio.jfcdpp.TunerException;
 import com.ritolaaudio.jfcdpp.internal.Commands;
 
-public class FCDPP
+public class FCDPPImpl implements FCDPP
 	{
 	private HIDDevice device;
 	Logger log=Logger.getGlobal();
-	public FCDPP(HIDDevice dev)
-		{this.device=dev;}
+	public FCDPPImpl(HIDDevice dev)
+		{
+		this.device=dev;
+		}
 	
 	public boolean isLNAOn(){return getByte(device,Commands.GET_LNA_GAIN)==1;}
 	public int getFrequency(){return getInt(device,Commands.GET_FREQUENCY_HZ);}
@@ -142,18 +145,24 @@ public class FCDPP
 		catch(IOException e){log.severe(e.getLocalizedMessage());}
 		}
 
+	@Override
 	public String getVendor() throws IOException
 		{
-		return device.getVendor();
+		// TODO Auto-generated method stub
+		return null;
 		}
 
+	@Override
 	public String getModel() throws IOException
 		{
-		return device.getModel();
+		// TODO Auto-generated method stub
+		return null;
 		}
 
+	@Override
 	public String getSerial() throws IOException
 		{
-		return device.getSerial();
+		// TODO Auto-generated method stub
+		return null;
 		}
 	}//FCDPP
