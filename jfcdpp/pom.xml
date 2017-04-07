@@ -54,11 +54,12 @@
 </plugins>
 </build>
   <dependencies>
-  <dependency>
-    <groupId>de.ailis.usb4java</groupId>
-    <artifactId>usb4java</artifactId>
-    <version>1.0.0</version>
-  </dependency>
+  <!-- https://mvnrepository.com/artifact/org.usb4java/usb4java-javax -->
+<dependency>
+    <groupId>org.usb4java</groupId>
+    <artifactId>usb4java-javax</artifactId>
+    <version>1.2.0</version>
+</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -69,6 +70,11 @@
     	<groupId>com.codeminders</groupId>
     	<artifactId>hidapi</artifactId>
     	<version>1.1</version>
+    </dependency>
+    <dependency>
+    	<groupId>net.java.dev.jna</groupId>
+    	<artifactId>jna</artifactId>
+    	<version>3.2.7</version>
     </dependency>
   </dependencies>
 </project>
