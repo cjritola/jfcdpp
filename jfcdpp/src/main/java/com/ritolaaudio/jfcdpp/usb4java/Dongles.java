@@ -40,8 +40,6 @@ import com.ritolaaudio.jfcdpp.FCDPP;
 
 public class Dongles
 	{
-	static {com.codeminders.hidapi.ClassPathLibraryLoader.loadNativeHIDLibrary();}
-	
 	public static void getDongles(Collection<FCDPP> result) throws IOException
 		{
 		try {
@@ -110,7 +108,8 @@ public class Dongles
             	}//end if(HID)
         	
         	}}
-        catch(UsbException e){if(!e.getMessage().contains("LIBUSB_ERROR_ACCESS"))throw e;}
+        //Some devices don't allow us to query. Gracefully skip them.
+        catch(UsbException e){if(!e.getMessage().contains("Access denied"))throw e;}
         catch(UnsupportedEncodingException e){e.printStackTrace();}
         
         if (device.isUsbHub())
